@@ -61,8 +61,14 @@ int main(){
 			board[i] = "*";
 	}
 //	print_board();
-	cout << "Welcome to Chemistry Simulation, Enter two Atoms to make a new one" << endl;
+	cout << "Welcome to Chemistry Simulation, Enter your choice: " << endl;
+	int choice;
 	while(true){
+		cout << "1)Simulate atoms" << endl;
+		cout << "2)Check list of available atoms/molecules" << endl;
+		cout << "3)Quit" << endl;
+		cin >> choice;
+		if(choice == 1){
 		string name1, name2;
 		cout << "Enter Atom 1: ";
 		cin >> name1;
@@ -73,6 +79,13 @@ int main(){
 		if(name2 == "q") die();
 		atom atom2(name2);
 		sim_board(atom1, atom2);
+		}
+		else if(choice ==2){
+			//print list of available atoms/moleculues	
+		}
+		else if(choice == 3){
+			die();
+		}
 	}
 	/*	for(int i = 0; i <y_size; i++){
 		for(int j =0; j < x_size; j++){
