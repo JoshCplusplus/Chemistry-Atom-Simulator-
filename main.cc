@@ -29,26 +29,26 @@ void print_board(){
 	cout << endl;
 	usleep(300000);
 }
-void sim_board(string obj1, string obj2){
-	string mol = obj1 + obj2;
+void sim_board(atom obj1, atom obj2){
+	string mol = obj1.get_name() + obj2.get_name();
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
-	board[pos1] = obj1;
-	board[pos2] = obj2;
+	board[pos1] = obj1.get_name();
+	board[pos2] = obj2.get_name();
 	print_board();
 	while(pos1 != pos2){
 		board[pos1] = "*";
 		board[pos2] = "*";
-		board[++pos1] = obj1;
-		board[--pos2] = obj2;
+		board[++pos1] = obj1.get_name();
+		board[--pos2] = obj2.get_name();
 		if(pos1 == pos2) break;
 		system("clear");
 		print_board();
 		cout << endl;
 	}
 	system("clear");
-	board[pos1] = obj1 + "2";
+	board[pos1] = obj1.get_name() + "2";
 	print_board();
 	board[pos1] = "*";
 	cout << endl;
@@ -63,13 +63,15 @@ int main(){
 //	print_board();
 	cout << "Welcome to Chemistry Simulation, Enter two Atoms to make a new one" << endl;
 	while(true){
-		string atom1, atom2;
+		string name1, name2;
 		cout << "Enter Atom 1: ";
-		cin >> atom1;
-		if(atom1 == "q") die();
+		cin >> name1;
+		if(name1 == "q") die();
+		atom atom1(name1);
 		cout << "Enter Atom2: ";
-		cin >> atom2;
-		if(atom2 == "q") die();
+		cin >> name2;
+		if(name2 == "q") die();
+		atom atom2(name2);
 		sim_board(atom1, atom2);
 	}
 	/*	for(int i = 0; i <y_size; i++){
