@@ -6,6 +6,14 @@ using namespace std;
 
 class atom{
 	string name;
+	public:
+	atom(string atomname){
+		name = atomname;
+	}
+	atom();
+	string get_name(){
+		return name;
+	} 
 };
 
 class molecule{
