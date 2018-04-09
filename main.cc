@@ -16,6 +16,10 @@ const int x_size = 31;
 const int y_size = 15;
 string board[y_size*x_size];
 
+void die(){
+	exit(0);
+}
+
 void print_board(){
 	for(int i = 0; i < x_size*y_size; i++){
 		if(i % 31 == 0 && i > 0) cout << endl;
@@ -25,6 +29,7 @@ void print_board(){
 	usleep(300000);
 }
 void sim_board(string obj1, string obj2){
+	string mol = obj1 + obj2;
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
@@ -42,8 +47,9 @@ void sim_board(string obj1, string obj2){
 		cout << endl;
 	}
 	system("clear");
-	board[pos1] = "H2";
+	board[pos1] = obj1 + "2";
 	print_board();
+	board[pos1] = "*";
 	cout << endl;
 
 }
@@ -53,7 +59,17 @@ int main(){
 			board[i] = "*";
 	}
 //	print_board();
-	sim_board("H", "H");
+	cout << "Welcome to Chemistry Simulation, Enter two Atoms to make a new one" << endl;
+	while(true){
+		string atom1, atom2;
+		cout << "Enter Atom 1: ";
+		cin >> atom1;
+		if(atom1 == "q") die();
+		cout << "Enter Atom2: ";
+		cin >> atom2;
+		if(atom2 == "q") die();
+		sim_board(atom1, atom2);
+	}
 	/*	for(int i = 0; i <y_size; i++){
 		for(int j =0; j < x_size; j++){
 		cout << board[i][j];
