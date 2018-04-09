@@ -9,7 +9,7 @@
 #include <vector>
 #include <queue>
 #include <set>
-
+#include "atom.h"
 using namespace std;
 
 const int x_size = 31;
@@ -17,6 +17,7 @@ const int y_size = 15;
 string board[y_size*x_size];
 
 void die(){
+	system("clear");
 	exit(0);
 }
 
@@ -55,6 +56,7 @@ void sim_board(string obj1, string obj2){
 }
 
 int main(){
+	system("clear");
 	for(int i = 0; i < y_size*x_size; i++){
 			board[i] = "*";
 	}
