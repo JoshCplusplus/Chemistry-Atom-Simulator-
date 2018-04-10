@@ -3,24 +3,12 @@
 
 using namespace std;
 
-
-class atom{
-	string name;
-	public:
-	atom(string atomname){
-		name = atomname;
-	}
-	atom();
-	string get_name(){
-		return name;
-	} 
-};
-
 class molecule{
 	string name;
-	atom first;
-	atom second;
+	string first;
+	string second;
 	double energy;
+	string message;
 	public:
 	double get_energy(){
 		return energy;
@@ -28,20 +16,22 @@ class molecule{
 	string get_name(){
 		return name;
 	}
-	string get_first_name(){
-		return first.get_name();
+	string get_first(){
+		return first;
 	}
-	string get_second_name(){
-		return second.get_name();
+	string get_second(){
+		return second;
+	}
+	string get_message(){
+		cout << message << endl;
 	}
 
-
-	molecule(string name1, atom atom1, atom atom2, double energy1){
+	molecule(string name1, string atom1, string atom2, double energy1,string newmessage){
 		name = name1;
 		first = atom1;
 		second = atom2;
 		energy = energy1;
+		message = newmessage;
 	}
-};
-
+}h2("H2","H","H",20,"Hydrogen Bond Formed"),h2o("H2O","H2","O",286,"Water Created"); 
 
