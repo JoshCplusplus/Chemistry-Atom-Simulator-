@@ -10,11 +10,19 @@
 #include <queue>
 #include <set>
 #include "atom.h"
+#include <unordered_map>
+#include <unordered_set>
 using namespace std;
 
 const int x_size = 31;
 const int y_size = 15;
 string board[y_size*x_size];
+
+unordered_set <string> atomlist = {"H","C","O","Cl","F","N"};
+unordered_map<string,molecule> allmol({{"H2O",h2o},{"H2",h2}});
+priority_queue <molecule> avmol;
+
+
 
 void die(){
 	system("clear");
@@ -29,26 +37,39 @@ void print_board(){
 	cout << endl;
 	usleep(300000);
 }
-void sim_board(atom obj1, atom obj2){
-	string mol = obj1.get_name() + obj2.get_name();
+
+
+bool check_atom(string atom){
+	bool check = false;
+	for(int i = 0; i < avat.size(); i++){
+		if(atom == *(&avat.top()+i)) check = true;
+	}
+	if(allmol.find(atom) != allmol.end()) check = true;
+	if(check) return true;
+	else return false;
+
+}
+
+void sim_board(string obj1, string obj2){
+	string mol = obj1 + obj2;
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
-	board[pos1] = obj1.get_name();
-	board[pos2] = obj2.get_name();
+	board[pos1] = obj1;
+	board[pos2] = obj2;
 	print_board();
 	while(pos1 != pos2){
 		board[pos1] = "*";
 		board[pos2] = "*";
-		board[++pos1] = obj1.get_name();
-		board[--pos2] = obj2.get_name();
+		board[++pos1] = obj1;
+		board[--pos2] = obj2;
 		if(pos1 == pos2) break;
 		system("clear");
 		print_board();
 		cout << endl;
 	}
 	system("clear");
-	board[pos1] = obj1.get_name() + "2";
+	board[pos1] = mol;
 	print_board();
 	board[pos1] = "*";
 	cout << endl;
@@ -72,13 +93,9 @@ int main(){
 		string name1, name2;
 		cout << "Enter Atom 1: ";
 		cin >> name1;
-		if(name1 == "q") die();
-		atom atom1(name1);
 		cout << "Enter Atom2: ";
 		cin >> name2;
-		if(name2 == "q") die();
-		atom atom2(name2);
-		sim_board(atom1, atom2);
+		sim_board(name1, name2);
 		}
 		else if(choice ==2){
 			//print list of available atoms/moleculues	
