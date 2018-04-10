@@ -23,6 +23,10 @@ unordered_map<string,molecule> allmol({{"H2O",h2o},{"H2",h2}});
 priority_queue <molecule> avmol;
 
 
+bool operator<(molecule a, molecule b){
+	if(a.get_energy() < b.get_energy()) return true;
+	else return false;
+}
 
 void die(){
 	system("clear");
@@ -39,16 +43,16 @@ void print_board(){
 }
 
 
-bool check_atom(string atom){
+/*bool check_atom(string atom){
 	bool check = false;
-	for(int i = 0; i < avat.size(); i++){
-		if(atom == *(&avat.top()+i)) check = true;
+	for(int i = 0; i < avmol.size(); i++){
+		if(atom == *(&avmol.top()+i)) check = true;
 	}
 	if(allmol.find(atom) != allmol.end()) check = true;
 	if(check) return true;
 	else return false;
 
-}
+}*/
 
 void sim_board(string obj1, string obj2){
 	string mol = obj1 + obj2;
