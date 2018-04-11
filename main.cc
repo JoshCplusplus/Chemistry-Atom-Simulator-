@@ -12,6 +12,7 @@
 #include "atom.h"
 #include <unordered_map>
 #include <unordered_set>
+#include <boost/functional/hash.hpp>
 using namespace std;
 
 const int x_size = 31;
@@ -19,7 +20,7 @@ const int y_size = 15;
 string board[y_size*x_size];
 
 unordered_set <string> atomlist = {"H","C","O","Cl","F","N"};
-unordered_map<string,molecule> allmol({{"H2O",h2o},{"H2",h2}});
+unordered_map<pair<string,string>,molecule,boost::hash<pair<string,string>>> allmol({{h2o.get_pair(),h2o},{h2.get_pair(),h2}});
 priority_queue <molecule> avmol;
 
 
