@@ -12,7 +12,7 @@ class molecule{
 	double get_energy() const{
 		return energy;
 	}
-	string get_name(){
+	string get_name() const{
 		return name;
 	}
 	string get_message(){
