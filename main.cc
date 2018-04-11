@@ -19,9 +19,10 @@ using namespace std;
 const int x_size = 31;
 const int y_size = 15;
 string board[y_size*x_size];
+int tot_energy = 0;
 
 unordered_set <string> atomlist = {"H","C","O","Cl","F","N"};
-unordered_map<pair<string,string>,molecule,boost::hash<pair<string,string>>> allmol({{h2o.get_pair(),h2o},{h2.get_pair(),h2}});
+unordered_map<pair<string,string>,molecule,boost::hash<pair<string,string>>> allmol({{h2o.get_pair(),h2o},{h2.get_pair(),h2},{o2.get_pair(),o2}});
 priority_queue <molecule> avmol;
 
 
@@ -62,12 +63,13 @@ void print_board(){
 	cout << endl;
 	usleep(300000);
 }
-string find_mol(string x, string y){
+molecule find_mol(string x, string y){
+	molecule temp;
 	auto i = allmol.find(make_pair(x,y));
 	auto j = allmol.find(make_pair(y,x));
-	if(i != allmol.end()) return i->second.get_name();
-	else if(j != allmol.end()) return i->second.get_name();
-	else return "0";
+	if(i != allmol.end()) return i->second;
+	else if(j != allmol.end()) return i->second;
+	else return temp;
 }
 bool check_mol(string mol){
 	for(int i = 0; i < avmol.size(); i++){
@@ -81,8 +83,10 @@ bool check_atom(string atom){
 
 }
 
-void sim_board(string obj1, string obj2, string molec){
-	string mol = molec;
+void sim_board(string obj1, string obj2, molecule molec){
+	string mol = molec.get_name();
+	avmol.push(molec);
+	tot_energy += molec.get_energy();
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
@@ -103,7 +107,8 @@ void sim_board(string obj1, string obj2, string molec){
 	board[pos1] = mol;
 	print_board();
 	board[pos1] = "*";
-	cout << endl;
+	cout << molec.get_message() << endl;
+	cout << "\nTotal Energy(Kj/mol): " << tot_energy << "  H.E.M: " << avmol.top().get_name() << endl;
 
 }
 
@@ -123,7 +128,7 @@ int main(){
 		if(choice == 1){
 			string name1, name2;
 			bool check;
-			string mol_check;
+			molecule mol_check;
 			while(cin){
 				while(cin){
 					cout << "Enter Atom 1: ";
@@ -146,7 +151,7 @@ int main(){
 					else cout << "Invalid Atom/Moleculue" << endl;
 				}
 				mol_check = find_mol(name1,name2);
-				if(mol_check == "0"){
+				if(mol_check.get_name() == "BAD"){
 					cout << "Bad pair of atoms/molecules" << endl;
 				}
 				else break;
