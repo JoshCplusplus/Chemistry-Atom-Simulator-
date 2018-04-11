@@ -11,7 +11,6 @@
 #include <set>
 #include "atom.h"
 using namespace std;
-
 const int x_size = 31;
 const int y_size = 15;
 string board[y_size*x_size];
@@ -20,6 +19,10 @@ void die(){
 	system("clear");
 	exit(0);
 }
+void fillvector(vector<atom>&);
+void printvector(const vector<atom>&);
+	
+vector<atom> atoms;
 
 void print_board(){
 	for(int i = 0; i < x_size*y_size; i++){
@@ -61,6 +64,8 @@ int main(){
 			board[i] = "*";
 	}
 //	print_board();
+	fillvector(atoms);
+	printvector(atoms);
 	cout << "Welcome to Chemistry Simulation, Enter your choice: " << endl;
 	int choice;
 	while(true){
@@ -93,4 +98,30 @@ int main(){
 		}
 		cout << endl;
 		}*/
+}
+
+void fillvector(vector<atom>& newatoms){
+string name;
+int AN;
+cout <<"How many atoms are in the table?"<<endl;
+int tablesize;
+cin>> tablesize;
+for(int i = 0; i< tablesize;i++){
+cout<<" enter atom name: "<<endl;
+cin>> name;
+cout<< "enter atom's atomic number: "<<endl;
+cin>> AN;
+
+atom newatom(name,AN);
+newatoms.push_back(newatom);
+}
+cout<<endl;
+}
+void printvector(const vector<atom>& newatoms){
+	unsigned int size= newatoms.size;
+	for(int i=0;i<size,i++){
+		cout<<" atom: "<< newatoms[i].getname()<<endl;
+		cout <<" atomic number: "<<newatoms[i].getAN()<<endl;
+		cout<< endl;
+		
 }
