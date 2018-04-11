@@ -141,6 +141,7 @@ int main(){
 
 		}
 		else if(choice ==2){
+			printvector(atoms);
 			//print list of available atoms/moleculues	
 		}
 		else if(choice == 3){
