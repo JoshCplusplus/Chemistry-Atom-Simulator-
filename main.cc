@@ -42,18 +42,24 @@ void print_board(){
 	cout << endl;
 	usleep(300000);
 }
-
-
-/*bool check_atom(string atom){
-	bool check = false;
+string find_mol(string x, string y){
+	auto i = allmol.find(make_pair(x,y));
+	auto j = allmol.find(make_pair(y,x));
+	if(i != allmol.end()) return i->second.get_name();
+	else if(j != allmol.end()) return i->second.get_name();
+	else return "0";
+}
+bool check_mol(string mol){
 	for(int i = 0; i < avmol.size(); i++){
-		if(atom == *(&avmol.top()+i)) check = true;
+		if((*(&avmol.top() + i)).get_name() == mol) return true;
 	}
-	if(allmol.find(atom) != allmol.end()) check = true;
-	if(check) return true;
+	return false;
+}
+bool check_atom(string atom){
+	if(atomlist.find(atom) != atomlist.end()) return true;
 	else return false;
 
-}*/
+}
 
 void sim_board(string obj1, string obj2){
 	string mol = obj1 + obj2;
@@ -100,6 +106,7 @@ int main(){
 		cin >> name1;
 		cout << "Enter Atom2: ";
 		cin >> name2;
+		
 		sim_board(name1, name2);
 		}
 		else if(choice ==2){
