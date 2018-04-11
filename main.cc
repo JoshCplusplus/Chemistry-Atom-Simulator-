@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <unistd.h>
 #include <cmath>
 #include <ctime>
@@ -32,6 +33,25 @@ bool operator<(molecule a, molecule b){
 void die(){
 	system("clear");
 	exit(0);
+}
+
+void print_atoms(){
+	cout << "\nAvailable Atoms:" << endl;
+	for(string s: atomlist){
+		cout << s << endl;
+	}
+	cout << "\nAvailable Molecules:" << endl;
+	if(avmol.size() == 0) cout << "NONE" << endl;
+	else{
+		for(int i = 0; i < avmol.size(); i++){
+			cout << (*(&avmol.top() + i)).get_name() << endl;
+		}
+	}
+	cout << "\nAll Moleclues:" << endl;
+	for(auto i : allmol){
+		cout << i.second.get_name() << endl;
+	}
+	cout << endl;
 }
 
 void print_board(){
@@ -108,7 +128,8 @@ int main(){
 				while(cin){
 					cout << "Enter Atom 1: ";
 					cin >> name1;
-					if(name1 == "q") die();
+					for(auto& c: name1) c = toupper(c);
+					if(name1 == "Q") die();
 					if(name1.size() == 1) check = check_atom(name1);
 					else check = check_mol(name1);
 					if(check) break;
@@ -117,7 +138,8 @@ int main(){
 				while(cin){
 					cout << "Enter Atom2: ";
 					cin >> name2;
-					if(name2 == "q") die();
+					for(auto & c: name2) c = toupper(c);
+					if(name2 == "Q") die();
 					if(name2.size() == 1) check = check_atom(name2);
 					else check = check_mol(name2);
 					if(check) break;
@@ -134,6 +156,7 @@ int main(){
 		}
 		else if(choice ==2){
 			//print list of available atoms/moleculues	
+			print_atoms();
 		}
 		else if(choice == 3){
 			die();
