@@ -10,10 +10,23 @@
 #include <queue>
 #include <set>
 #include "atom.h"
+#include <unordered_map>
+#include <unordered_set>
+#include <boost/functional/hash.hpp>
 using namespace std;
 const int x_size = 31;
 const int y_size = 15;
 string board[y_size*x_size];
+
+unordered_set <string> atomlist = {"H","C","O","Cl","F","N"};
+unordered_map<pair<string,string>,molecule,boost::hash<pair<string,string>>> allmol({{h2o.get_pair(),h2o},{h2.get_pair(),h2}});
+priority_queue <molecule> avmol;
+
+
+bool operator<(molecule a, molecule b){
+	if(a.get_energy() < b.get_energy()) return true;
+	else return false;
+}
 
 void die(){
 	system("clear");
@@ -32,26 +45,45 @@ void print_board(){
 	cout << endl;
 	usleep(300000);
 }
-void sim_board(atom obj1, atom obj2){
-	string mol = obj1.get_name() + obj2.get_name();
+string find_mol(string x, string y){
+	auto i = allmol.find(make_pair(x,y));
+	auto j = allmol.find(make_pair(y,x));
+	if(i != allmol.end()) return i->second.get_name();
+	else if(j != allmol.end()) return i->second.get_name();
+	else return "0";
+}
+bool check_mol(string mol){
+	for(int i = 0; i < avmol.size(); i++){
+		if((*(&avmol.top() + i)).get_name() == mol) return true;
+	}
+	return false;
+}
+bool check_atom(string atom){
+	if(atomlist.find(atom) != atomlist.end()) return true;
+	else return false;
+
+}
+
+void sim_board(string obj1, string obj2){
+	string mol = obj1 + obj2;
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
-	board[pos1] = obj1.get_name();
-	board[pos2] = obj2.get_name();
+	board[pos1] = obj1;
+	board[pos2] = obj2;
 	print_board();
 	while(pos1 != pos2){
 		board[pos1] = "*";
 		board[pos2] = "*";
-		board[++pos1] = obj1.get_name();
-		board[--pos2] = obj2.get_name();
+		board[++pos1] = obj1;
+		board[--pos2] = obj2;
 		if(pos1 == pos2) break;
 		system("clear");
 		print_board();
 		cout << endl;
 	}
 	system("clear");
-	board[pos1] = obj1.get_name() + "2";
+	board[pos1] = mol;
 	print_board();
 	board[pos1] = "*";
 	cout << endl;
@@ -77,13 +109,10 @@ int main(){
 		string name1, name2;
 		cout << "Enter Atom 1: ";
 		cin >> name1;
-		if(name1 == "q") die();
-		atom atom1(name1);
 		cout << "Enter Atom2: ";
 		cin >> name2;
-		if(name2 == "q") die();
-		atom atom2(name2);
-		sim_board(atom1, atom2);
+		
+		sim_board(name1, name2);
 		}
 		else if(choice ==2){
 			//print list of available atoms/moleculues	

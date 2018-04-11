@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 class atom{
 	string newname;
 int newAN;
@@ -13,36 +12,36 @@ int newAN;
 	datom();
 	string getname();
 	int getAN();
+  }
 	void setname(string);
 	void setAN(int);
+  
 		
 
 class molecule{
 	string name;
-	atom first;
-	atom second;
+	pair <string,string> madeof;
 	double energy;
+	string message;
 	public:
-	double get_energy(){
+	double get_energy() const{
 		return energy;
 	}
-	string get_name(){
+	string get_name() const{
 		return name;
 	}
-	string get_first_name(){
-		return first.get_name();
+	string get_message(){
+		cout << message << endl;
 	}
-	string get_second_name(){
-		return second.get_name();
+	pair<string,string> get_pair(){
+		return madeof;
 	}
-
-
-	molecule(string name1, atom atom1, atom atom2, double energy1){
+	molecule(string name1, string atom1, string atom2, double energy1,string newmessage){
 		name = name1;
-		first = atom1;
-		second = atom2;
+		madeof = make_pair(atom1,atom2);
 		energy = energy1;
+		message = newmessage;
 	}
-};
+}h2("H2","H","H",20,"Hydrogen Bond Formed"),h2o("H2O","H2","O",286,"Water Created"); 
 
 
