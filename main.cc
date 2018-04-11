@@ -61,8 +61,8 @@ bool check_atom(string atom){
 
 }
 
-void sim_board(string obj1, string obj2){
-	string mol = obj1 + obj2;
+void sim_board(string obj1, string obj2, string molec){
+	string mol = molec;
 	system("clear");
 	int pos1 = 217;
 	int pos2 = 247;
@@ -90,9 +90,9 @@ void sim_board(string obj1, string obj2){
 int main(){
 	system("clear");
 	for(int i = 0; i < y_size*x_size; i++){
-			board[i] = "*";
+		board[i] = "*";
 	}
-//	print_board();
+	//	print_board();
 	cout << "Welcome to Chemistry Simulation, Enter your choice: " << endl;
 	int choice;
 	while(true){
@@ -101,13 +101,36 @@ int main(){
 		cout << "3)Quit" << endl;
 		cin >> choice;
 		if(choice == 1){
-		string name1, name2;
-		cout << "Enter Atom 1: ";
-		cin >> name1;
-		cout << "Enter Atom2: ";
-		cin >> name2;
-		
-		sim_board(name1, name2);
+			string name1, name2;
+			bool check;
+			string mol_check;
+			while(cin){
+				while(cin){
+					cout << "Enter Atom 1: ";
+					cin >> name1;
+					if(name1 == "q") die();
+					if(name1.size() == 1) check = check_atom(name1);
+					else check = check_mol(name1);
+					if(check) break;
+					else cout << "Invalid Atom/Molecule" << endl;
+				}
+				while(cin){
+					cout << "Enter Atom2: ";
+					cin >> name2;
+					if(name2 == "q") die();
+					if(name2.size() == 1) check = check_atom(name2);
+					else check = check_mol(name2);
+					if(check) break;
+					else cout << "Invalid Atom/Moleculue" << endl;
+				}
+				mol_check = find_mol(name1,name2);
+				if(mol_check == "0"){
+					cout << "Bad pair of atoms/molecules" << endl;
+				}
+				else break;
+			}
+			sim_board(name1, name2,mol_check);
+
 		}
 		else if(choice ==2){
 			//print list of available atoms/moleculues	
