@@ -5,16 +5,17 @@ using namespace std;
 
 
 class atom{
-	string name;
+	string newname;
+int newAN;
 	public:
-	atom(string atomname){
-		name = atomname;
-	}
 	atom();
-	string get_name(){
-		return name;
-	} 
-};
+	atom(string,int);
+	datom();
+	string getname();
+	int getAN();
+	void setname(string);
+	void setAN(int);
+		
 
 class molecule{
 	string name;
