@@ -3,6 +3,21 @@
 
 using namespace std;
 
+class atom{
+	string newname;
+int newAN;
+	public:
+	atom();
+	atom(string,int);
+	datom();
+	string getname();
+	int getAN();
+  }
+	void setname(string);
+	void setAN(int);
+  
+		
+
 class molecule{
 	string name;
 	pair <string,string> madeof;
